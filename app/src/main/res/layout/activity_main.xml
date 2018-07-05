@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.startandroid.vk_client.LoginActivity">
+    tools:context="ru.startandroid.vk_client.LoginView">
+
+    <Button
+        android:id="@+id/btnEnter"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/vk_share_blue_color"
+        android:elevation="0dp"
+        android:fontFamily="casual"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/text_enterBtn"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="24sp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/tvHello"
+        android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -16,31 +40,31 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Hello"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.136"
+        android:text="@string/app_name_forUser"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="?attr/colorPrimaryDark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnter"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792" />
-
-    <Button
-        android:id="@+id/btnEnter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Do you want to enter?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginBottom="28dp"
+        android:fontFamily="monospace"
+        android:text="@string/user_warning"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textAppearance="@android:style/TextAppearance"
+        android:textColor="@color/vk_share_link_color"
+        android:textSize="12sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnter"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

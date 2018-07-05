@@ -43,4 +43,6 @@ public class VKResponse {
      * Model parsed from response
      */
     public Object parsedModel;
+
+
 }
