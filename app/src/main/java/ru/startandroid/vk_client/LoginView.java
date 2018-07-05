@@ -61,8 +61,26 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
             {
                 String scope[] = {"friends"};
                 VKSdk.login(this, scope);
+
             }
 
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                // Пользователь успешно авторизовался
+                res.saveTokenToSharedPreferences(getApplication(), "VK_TOKEN");
+                startActivity(new Intent(getApplicationContext(), UserPageView.class));
+            }
+            @Override
+            public void onError(VKError error) {
+                // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

@@ -36,10 +36,14 @@ public class VK_app extends Application {
     {
         is_logged = VKSdk.isLoggedIn();
         Intent nextView;
-        if(is_logged)
+        if(is_logged) {
+            Log.d("FUCK", "user is logged in");
             nextView = new Intent(this, UserPageView.class);
-        else
+        }
+        else {
+            Log.d("FUCK", "user is not logged in");
             nextView = new Intent(this, LoginView.class);
+        }
         startActivity(nextView);
     }
 
