@@ -18,10 +18,9 @@ import com.vk.sdk.api.model.VKList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UserPageView extends AppCompatActivity {
+public class UserPageView extends PageView {
 
-    TextView tvUsername, tvOnline, tvCity;
-    ImageView ivPhoto;
+    UserPagePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,29 +29,9 @@ public class UserPageView extends AppCompatActivity {
         Log.d("FUCK", this.getClass().toString() + " created");
         initUserPage();
 
-
-        VKRequest req = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100"));
-        req.executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-                Log.d("FUCK", response.json.toString());
-                JSONArray resp = response.json.optJSONArray("response");
-                JSONObject user = resp.optJSONObject(0);
-
-                tvUsername.setText(user.optString("first_name") + " " + user.optString("last_name"));
-
-                tvOnline.setText(user.optInt("online") == 1 ? "online" : "offline");
-
-                String city = user.optJSONObject("city").optString("title");
-                tvCity.setText(city);
-
-                String url = user.optString("photo_100");
-                new DownloadImageTask(ivPhoto).execute(url);
-            }
-        });
-
-
+        presenter.fillModel();
+        presenter.msg();
+        Log.d("FUCK", "presenter filled");
     }
 
     private void initUserPage() {
@@ -61,6 +40,32 @@ public class UserPageView extends AppCompatActivity {
         tvCity = (TextView) findViewById(R.id.tvCity);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 
+        Log.d("FUCK", "presenter initialised");
+        presenter = new UserPagePresenter(this);
     }
 
+    @Override
+    void setUserName(String userName) {
+        tvUsername.setText(userName);
+    }
+    @Override
+    void setOnline(String online) {
+        tvOnline.setText(online);
+    }
+    @Override
+    void setCity(String city) {
+        tvCity.setText(city);
+    }
+    @Override
+    void setPhoto(ImageView photo) {
+        ivPhoto = photo;
+    }
+    @Override
+    void setFriends(String friends) {
+        btnFriend.setText(friends);
+    }
+    @Override
+    void setFollowers(String followers) {
+        btnFollowers.setText(followers);
+    }
 }

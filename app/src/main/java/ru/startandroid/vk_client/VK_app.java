@@ -15,7 +15,7 @@ public class VK_app extends Application {
         @Override
         public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
             if (newToken == null) {
-                // VKAccessToken is invalid
+                    enter();
             }
         }
     };*/
@@ -27,6 +27,7 @@ public class VK_app extends Application {
         Log.d("FUCK", "Сначала вызывается апликатион");
         Log.d("FUCK", this.getClass().toString() + " created");
         VKSdk.initialize(this);
+        //vkAccessTokenTracker.startTracking();
         check_Authorization();
 
 
@@ -36,15 +37,22 @@ public class VK_app extends Application {
     {
         is_logged = VKSdk.isLoggedIn();
         Intent nextView;
-        if(is_logged) {
-            Log.d("FUCK", "user is logged in");
-            nextView = new Intent(this, UserPageView.class);
-        }
-        else {
-            Log.d("FUCK", "user is not logged in");
-            nextView = new Intent(this, LoginView.class);
-        }
+        if(is_logged)
+            nextView = enter();
+        else
+            nextView = authorization();
         startActivity(nextView);
+    }
+
+    Intent enter()
+    {
+        Log.d("FUCK", "user is logged in");
+        return new Intent(this, UserPageView.class);
+    }
+    Intent authorization()
+    {
+        Log.d("FUCK", "user is not logged in");
+        return new Intent(this, LoginView.class);
     }
 
 }
