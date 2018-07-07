@@ -4,9 +4,10 @@ import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
+
+import retrofit2.Retrofit;
+import ru.startandroid.vk_client.View.UserPageView;
 
 
 public class VK_app extends Application {
@@ -19,6 +20,9 @@ public class VK_app extends Application {
             }
         }
     };*/
+
+    private static vkAPI vkAPI;
+    private Retrofit retrofit;
 
 
     @Override

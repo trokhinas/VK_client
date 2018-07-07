@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client;
+package ru.startandroid.vk_client.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -14,16 +14,16 @@ public abstract class PageView extends AppCompatActivity{
     ImageView ivPhoto;
     Button btnFriend, btnFollowers;
 
-    abstract void setUserName(String userName);
-    abstract void setOnline(String online);
-    abstract void setCity(String city);
+    public abstract void setUserName();
+    public abstract void setOnline();
+    public abstract void setCity();
 
-    abstract void setPhoto(ImageView photo);
+    public abstract void setPhoto(ImageView imageView);
 
-    abstract void setFriends(String friends);
-    abstract void setFollowers(String followers);
+    public abstract void setFriends();
+    public abstract void setFollowers();
 
-
+    abstract void initPage();
 
 
 }

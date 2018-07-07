@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client;
+package ru.startandroid.vk_client.DownloadClass;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
 
     public DownloadImageTask(ImageView bmImage) {

@@ -1,7 +1,9 @@
-package ru.startandroid.vk_client;
+package ru.startandroid.vk_client.Presenter;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -13,38 +15,42 @@ import com.vk.sdk.api.VKResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * Created by Anton on 05.07.2018.
- */
+import ru.startandroid.vk_client.DownloadClass.DownloadImageTask;
+import ru.startandroid.vk_client.Model.UserPageModel;
+import ru.startandroid.vk_client.View.UserPageView;
+
 
 public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel> {
 
-    UserPageView v;
-    UserPageModel m;
+    VKRequest req = VKApi.users().
+            get(VKParameters.from
+                    (VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100, counters"));
 
-    UserPagePresenter(UserPageView view)
+    //нужно сделать правильный реквест чтобы брать инфу по любому юзеру
+
+
+    public UserPagePresenter(UserPageView view)
     {
-        v = view;
-        m = new UserPageModel();
+        setView(view);
+        setModel(new UserPageModel());
+        fillModel();
     }
 
-    void fillModel()
+    public void fillModel()
     {
-        final VKRequest req = VKApi.users().
-                get(VKParameters.from
-                        (VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100, counters"));
-        req.executeWithListener(new VKRequest.VKRequestListener() {
+        Log.d("FUCK", "request is processed");
+        req.executeSyncWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
                 JSONArray res = response.json.optJSONArray("response");
-                Log.d("FUCC", "there's your request" + res.toString());
+                Log.d("FUCK", "there's your request" + res.toString());
                 JSONObject body = res.optJSONObject(0);
                 if(body != null)
                 {
-                    m.setId(new Integer(body.optInt("id")));
+                    m.setId(body.optInt("id"));
                     Log.d("FUCK", m.getId() + " in execute");
-                    m.setFname(new String(body.optString("first_name")));
+                    m.setFname(body.optString("first_name"));
                     Log.d("FUCK", m.getFname() + " in execute");
                     m.setLname(body.optString("last_name"));
                     m.setOnline(body.optInt("online") == 0 ? "offline" : "online");
@@ -84,8 +90,29 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
         });
     }
 
-    public void msg() {
-        Log.d("FUCK", m.getId() + "out of execute");
-        Log.d("FUCK", m.getFname() + "out of execute");
+
+    @Override
+    public String getUserName() {
+        return m.getFname() + " " + m.getLname();
+    }
+    @Override
+    public String getOnline() {
+        return m.getOnline();
+    }
+    @Override
+    public String getCity() {
+        return m.getCity();
+    }
+    @Override
+    public void getPhoto(ImageView iv) {
+        new DownloadImageTask(iv).execute(m.getUrlPhoto());
+    }
+    @Override
+    public String getFriends() {
+        return "Friends:" + m.getFriends();
+    }
+    @Override
+    public String getFollowers() {
+        return "Followers:" + m.getFollowers();
     }
 }

@@ -1,23 +1,20 @@
 package ru.startandroid.vk_client;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.util.VKUtil;
 
-import java.util.Arrays;
+import ru.startandroid.vk_client.View.UserPageView;
 
 public class LoginView extends AppCompatActivity implements View.OnClickListener {
 
@@ -59,7 +56,7 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
         {
             case R.id.btnEnter:
             {
-                String scope[] = {"friends"};
+                String scope[] = {VKScope.FRIENDS};
                 VKSdk.login(this, scope);
                 startActivity(new Intent(getApplicationContext(), UserPageView.class));
             }
