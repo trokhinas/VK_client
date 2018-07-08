@@ -18,7 +18,7 @@ public abstract class PageView extends AppCompatActivity{
     public abstract void setOnline();
     public abstract void setCity();
 
-    public abstract void setPhoto(ImageView imageView);
+    public abstract void setPhoto();
 
     public abstract void setFriends();
     public abstract void setFollowers();

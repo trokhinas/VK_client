@@ -1,16 +1,8 @@
 package ru.startandroid.vk_client.Model;
 
-/**
- * Created by toxat on 06.07.2018.
- */
-
 public class PageModel {
     private int size;
     private  Integer id;
-
-
-
-
 
     private String first_name;
     private String last_name;

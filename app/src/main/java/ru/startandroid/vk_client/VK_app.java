@@ -7,11 +7,14 @@ import android.util.Log;
 import com.vk.sdk.VKSdk;
 
 import retrofit2.Retrofit;
+import ru.startandroid.vk_client.View.FriendListView;
 import ru.startandroid.vk_client.View.UserPageView;
 
 
 public class VK_app extends Application {
     boolean is_logged = false;
+    static String defaultUserID = "0";
+
     /*VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
@@ -21,15 +24,9 @@ public class VK_app extends Application {
         }
     };*/
 
-    private static vkAPI vkAPI;
-    private Retrofit retrofit;
-
-
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("FUCK", "Сначала вызывается апликатион");
-        Log.d("FUCK", this.getClass().toString() + " created");
         VKSdk.initialize(this);
         //vkAccessTokenTracker.startTracking();
         check_Authorization();

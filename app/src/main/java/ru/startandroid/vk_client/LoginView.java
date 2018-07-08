@@ -23,7 +23,6 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("FUCK", this.getClass().toString() + " created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
@@ -32,7 +31,6 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("FUCK", this.getClass().toString() + " resumed");
     }
 
     private void init() {
@@ -58,7 +56,6 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
             {
                 String scope[] = {VKScope.FRIENDS};
                 VKSdk.login(this, scope);
-                startActivity(new Intent(getApplicationContext(), UserPageView.class));
             }
 
         }
@@ -70,6 +67,7 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
             public void onResult(VKAccessToken res) {
                 // Пользователь успешно авторизовался
                 res.saveTokenToSharedPreferences(getApplication(), "VK_TOKEN");
+                startActivity(new Intent(getApplicationContext(), UserPageView.class));
 
             }
             @Override

@@ -1,7 +1,10 @@
 package ru.startandroid.vk_client.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +19,17 @@ public class UserPageView extends PageView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_friend_page);
+
+        /*костылюга*/
+        Intent i = getIntent();
+        String userID = i.getStringExtra("id");
+        Log.d("FUCK", userID == null ? "null" : userID);
+        if(TextUtils.isEmpty(userID))
+            setContentView(R.layout.user_page);
+        else
+            setContentView(R.layout.user_friend_page);
         //разобраться с тем какой лэйаут отображать в зависимости от того юзер это или нет
-        Log.d("FUCK", this.getClass().toString() + " created");
         initUserPage();
-        Log.d("FUCK", "presenter filled");
     }
 
     private void initUserPage() {
@@ -30,7 +39,7 @@ public class UserPageView extends PageView {
         setUserName();
         setOnline();
         setCity();
-        setPhoto(ivPhoto);
+        setPhoto();
         setFollowers();
         setFriends();
     }
@@ -42,6 +51,19 @@ public class UserPageView extends PageView {
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
         btnFriend = (Button) findViewById(R.id.btnFriends);
         btnFollowers = (Button) findViewById(R.id.btnFollowers);
+
+        btnFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.friendsListener();
+            }
+        });
+        btnFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.followersListener();
+            }
+        });
     }
 
     @Override
@@ -57,8 +79,8 @@ public class UserPageView extends PageView {
         tvCity.setText(presenter.getCity());
     }
     @Override
-    public void setPhoto(ImageView imageView) {
-        presenter.getPhoto(imageView);
+    public void setPhoto() {
+        presenter.getPhoto(ivPhoto);
     }
     @Override
     public void setFriends() {

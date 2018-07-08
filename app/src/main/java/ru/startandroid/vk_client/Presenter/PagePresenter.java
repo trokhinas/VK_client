@@ -26,4 +26,7 @@ public abstract class PagePresenter<View, Model> {
     public abstract void getPhoto(ImageView iv);
     public abstract String getFriends();
     public abstract String getFollowers();
+
+    public abstract void friendsListener();
+    public abstract void followersListener();
 }

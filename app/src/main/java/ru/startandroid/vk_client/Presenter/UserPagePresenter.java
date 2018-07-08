@@ -1,9 +1,12 @@
 package ru.startandroid.vk_client.Presenter;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -14,29 +17,42 @@ import com.vk.sdk.api.VKResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 
 import ru.startandroid.vk_client.DownloadClass.DownloadImageTask;
 import ru.startandroid.vk_client.Model.UserPageModel;
+import ru.startandroid.vk_client.View.FriendListView;
 import ru.startandroid.vk_client.View.UserPageView;
 
 
 public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel> {
 
-    VKRequest req = VKApi.users().
-            get(VKParameters.from
-                    (VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100, counters"));
-
-    //нужно сделать правильный реквест чтобы брать инфу по любому юзеру
-
+    public VKRequest req;
 
     public UserPagePresenter(UserPageView view)
     {
         setView(view);
         setModel(new UserPageModel());
+        String userID = v.getIntent().getStringExtra("id");
+        if(!TextUtils.isEmpty(userID)) {
+            req = VKApi.users().
+                    get(VKParameters.from
+                            (VKApiConst.USER_IDS, userID,
+                                    VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100, counters"));
+            Log.d("FUCK", "not user is here");
+        }
+        else {
+            req = VKApi.users().
+                    get(VKParameters.from(
+                            VKApiConst.FIELDS, "first_name, last_name, online, city, photo_100, counters"));
+            Log.d("FUCK", "user is here");
+        }
+        Log.d("FUCK", "presenter initialising");
         fillModel();
     }
 
-    public void fillModel()
+    private void fillModel()
     {
         Log.d("FUCK", "request is processed");
         req.executeSyncWithListener(new VKRequest.VKRequestListener() {
@@ -114,5 +130,19 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     @Override
     public String getFollowers() {
         return "Followers:" + m.getFollowers();
+    }
+
+    @Override
+    public void friendsListener() {
+        v.getIntent().removeExtra("id");
+        Intent a = new Intent(v.getApplicationContext(), FriendListView.class);
+        a.putExtra("id", m.getId().toString());
+        Toast.makeText(v.getApplicationContext(), m.getId().toString(), Toast.LENGTH_SHORT).show();
+        v.startActivity(a);
+    }
+
+    @Override
+    public void followersListener() {
+        Toast.makeText(v.getApplicationContext(), "FOLLOWERS", Toast.LENGTH_SHORT).show();
     }
 }
