@@ -3,10 +3,10 @@ package ru.startandroid.vk_client;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -14,12 +14,14 @@ import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
-import ru.startandroid.vk_client.View.UserPageView;
+import ru.startandroid.vk_client.view.UserPageView;
 
 public class LoginView extends AppCompatActivity implements View.OnClickListener {
 
     Button btnEnter;
     TextView tvAppName, tvWarning;
+
+    VK_app app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     }
 
     private void init() {
+        app = (VK_app) getApplicationContext();
         findElements();
         initListeners();
     }
@@ -52,10 +55,8 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.btnEnter:
-            {
-                String scope[] = {VKScope.FRIENDS};
-                VKSdk.login(this, scope);
+            case R.id.btnEnter: {
+                VKSdk.login(this, app.getAppScope());
             }
 
         }
@@ -67,12 +68,14 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
             public void onResult(VKAccessToken res) {
                 // Пользователь успешно авторизовался
                 res.saveTokenToSharedPreferences(getApplication(), "VK_TOKEN");
+                app.setUserID(res.userId);
                 startActivity(new Intent(getApplicationContext(), UserPageView.class));
 
             }
             @Override
             public void onError(VKError error) {
                 // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
+                Toast.makeText(getApplicationContext(), "Access denied", Toast.LENGTH_SHORT);
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);

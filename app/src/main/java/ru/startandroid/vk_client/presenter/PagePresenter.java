@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client.Presenter;
+package ru.startandroid.vk_client.presenter;
 
 
 import android.widget.ImageView;
@@ -22,10 +22,10 @@ public abstract class PagePresenter<View, Model> {
 
     public abstract String getUserName();
     public abstract String getOnline();
-    public abstract String getCity();
+    public abstract String getCityTitle();
     public abstract void getPhoto(ImageView iv);
-    public abstract String getFriends();
-    public abstract String getFollowers();
+    public abstract String getFriendsCounter();
+    public abstract String getFollowersCounter();
 
     public abstract void friendsListener();
     public abstract void followersListener();

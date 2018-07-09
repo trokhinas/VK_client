@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client.View;
+package ru.startandroid.vk_client.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;

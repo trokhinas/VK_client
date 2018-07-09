@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client.View;
+package ru.startandroid.vk_client.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,40 +8,71 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import ru.startandroid.vk_client.R;
-import ru.startandroid.vk_client.Presenter.UserPagePresenter;
+import ru.startandroid.vk_client.VK_app;
+import ru.startandroid.vk_client.presenter.UserPagePresenter;
 
 public class UserPageView extends PageView {
-
     UserPagePresenter presenter;
-
+    VK_app app;
+    String TAG;
+    public enum layoutState {
+        me,
+        i_follower,
+        my_follower,
+        friend,
+        not_friend;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*костылюга*/
-        Intent i = getIntent();
-        String userID = i.getStringExtra("id");
-        Log.d("FUCK", userID == null ? "null" : userID);
-        if(TextUtils.isEmpty(userID))
-            setContentView(R.layout.user_page);
-        else
-            setContentView(R.layout.user_friend_page);
-        //разобраться с тем какой лэйаут отображать в зависимости от того юзер это или нет
+        setContentView(R.layout.user_page);
+        Log.d(TAG, "presenter initialising");
+        presenter = new UserPagePresenter(this);
+        setLayout();
         initUserPage();
+    }
+
+    private void setLayout() {
+        switch (presenter.getLayout())
+        {
+            case 0:
+            {
+                Toast.makeText(this, "It's my layout", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case 1:
+            {
+                Toast.makeText(this, "It's i followr layout", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case 2:
+            {
+                Toast.makeText(this, "It's my followr layout", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case 3:
+            {
+                Toast.makeText(this, "It's i my friend layout", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case 4:
+            {
+                Toast.makeText(this, "It's i not my friend layout", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+        }
     }
 
     private void initUserPage() {
         initPage();
-        Log.d("FUCK", "presenter initialised");
-        presenter = new UserPagePresenter(this);
-        setUserName();
-        setOnline();
-        setCity();
-        setPhoto();
-        setFollowers();
-        setFriends();
+
+        setUserName();setOnline();setCity();
+        setPhoto();setFollowers();setFriends();
     }
     @Override
     void initPage() {
@@ -76,7 +107,7 @@ public class UserPageView extends PageView {
     }
     @Override
     public void setCity() {
-        tvCity.setText(presenter.getCity());
+        tvCity.setText(presenter.getCityTitle());
     }
     @Override
     public void setPhoto() {
@@ -84,12 +115,11 @@ public class UserPageView extends PageView {
     }
     @Override
     public void setFriends() {
-        btnFriend.setText(presenter.getFriends());
+        btnFriend.setText("Friends:" + presenter.getFriendsCounter());
     }
     @Override
     public void setFollowers() {
-        btnFollowers.setText(presenter.getFollowers());
+        btnFollowers.setText("Followers:" + presenter.getFollowersCounter());
     }
-
 
 }

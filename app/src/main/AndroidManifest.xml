@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.UserPageView" />
-        <activity android:name=".View.FriendListView" />
-        <activity android:name=".View.listView"></activity>
+        <activity android:name=".view.UserPageView" />
+        <activity android:name=".view.FriendListView" />
+        <activity android:name=".view.listView"></activity>
     </application>
 
 </manifest>

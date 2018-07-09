@@ -1,4 +1,4 @@
-package ru.startandroid.vk_client.Presenter;
+package ru.startandroid.vk_client.presenter;
 
 /**
  * Created by toxat on 08.07.2018.

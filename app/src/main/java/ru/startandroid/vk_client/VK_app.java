@@ -4,56 +4,70 @@ import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
+import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 
-import retrofit2.Retrofit;
-import ru.startandroid.vk_client.View.FriendListView;
-import ru.startandroid.vk_client.View.UserPageView;
+import ru.startandroid.vk_client.view.UserPageView;
 
 
 public class VK_app extends Application {
     boolean is_logged = false;
-    static String defaultUserID = "0";
 
-    /*VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
-        @Override
-        public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
-            if (newToken == null) {
-                    enter();
-            }
-        }
-    };*/
+    private String UserRequsetParams = "first_name, last_name, online, city, photo_100, counters, friend_status";
+    private String FriendListRequestParams = "first_name, last_name, photo_100,";
+    private String []appScope = {VKScope.FRIENDS};
+    private String UserID = "0";
+    public String TAG = "myTagLog";
 
     @Override
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(this);
-        //vkAccessTokenTracker.startTracking();
         check_Authorization();
-
 
     }
 
-    void check_Authorization()
+    private void check_Authorization()
     {
         is_logged = VKSdk.isLoggedIn();
         Intent nextView;
-        if(is_logged)
+        if(is_logged) {
             nextView = enter();
+            setUserID(VKSdk.getAccessToken().userId);
+        }
         else
             nextView = authorization();
         startActivity(nextView);
     }
-
-    Intent enter()
+    private Intent enter()
     {
         Log.d("FUCK", "user is logged in");
         return new Intent(this, UserPageView.class);
     }
-    Intent authorization()
+    private Intent authorization()
     {
         Log.d("FUCK", "user is not logged in");
         return new Intent(this, LoginView.class);
+    }
+    public void setUserID(String id)
+    {
+        UserID = id;
+    }
+    public String getUserID()
+    {
+        return UserID;
+    }
+    public String getUserRequsetParams()
+    {
+        return UserRequsetParams;
+    }
+    public String getFriendListRequestParams()
+    {
+        return FriendListRequestParams;
+    }
+    public String []getAppScope()
+    {
+        return appScope;
     }
 
 }

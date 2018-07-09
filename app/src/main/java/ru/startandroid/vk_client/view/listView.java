@@ -1,11 +1,7 @@
-package ru.startandroid.vk_client.View;
+package ru.startandroid.vk_client.view;
 
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
-
-import ru.startandroid.vk_client.R;
 
 public abstract class listView extends AppCompatActivity {
 
