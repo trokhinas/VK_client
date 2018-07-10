@@ -41,12 +41,12 @@ public class VK_app extends Application {
     }
     private Intent enter()
     {
-        Log.d("FUCK", "user is logged in");
+        Log.d(TAG,"user is logged in");
         return new Intent(this, UserPageView.class);
     }
     private Intent authorization()
     {
-        Log.d("FUCK", "user is not logged in");
+        Log.d(TAG, "user is not logged in");
         return new Intent(this, LoginView.class);
     }
     public void setUserID(String id)

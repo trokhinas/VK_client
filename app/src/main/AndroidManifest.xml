@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".view.UserPageView" />
         <activity android:name=".view.FriendListView" />
+        <activity android:name=".view.FollowerListView" />
         <activity android:name=".view.listView"></activity>
     </application>
 

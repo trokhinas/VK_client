@@ -5,8 +5,6 @@ import android.widget.ListView;
 
 public abstract class listView extends AppCompatActivity {
 
-    ListView lv;
-
     public abstract void ShowProgress();
     public abstract void HideProgress();
 }

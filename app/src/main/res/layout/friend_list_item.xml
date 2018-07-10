@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@color/vk_white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:onClick="onItemClick">
 
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="USER_NAME"
+        android:text="@string/tv_user_name_default"
         android:textColor="@color/vk_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.105"

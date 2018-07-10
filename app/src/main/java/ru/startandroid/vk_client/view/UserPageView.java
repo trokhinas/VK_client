@@ -29,6 +29,8 @@ public class UserPageView extends PageView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (VK_app) getApplicationContext();
+        TAG = app.TAG;
         setContentView(R.layout.user_page);
         Log.d(TAG, "presenter initialising");
         presenter = new UserPagePresenter(this);
@@ -46,12 +48,12 @@ public class UserPageView extends PageView {
             }
             case 1:
             {
-                Toast.makeText(this, "It's i followr layout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "It's i follower layout", Toast.LENGTH_SHORT).show();
                 break;
             }
             case 2:
             {
-                Toast.makeText(this, "It's my followr layout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "It's my follower layout", Toast.LENGTH_SHORT).show();
                 break;
             }
             case 3:
@@ -107,7 +109,7 @@ public class UserPageView extends PageView {
     }
     @Override
     public void setCity() {
-        tvCity.setText(presenter.getCityTitle());
+        tvCity.setText(presenter.getCityTitle() == null ? "" : presenter.getCityTitle());
     }
     @Override
     public void setPhoto() {

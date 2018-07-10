@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Friends:NUM"
+                android:text="@string/btn_friend_num_default"
                 android:textColor="@color/vk_black" />
 
             <Button
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Followers:NUM"
+                android:text="@string/btn_follower_num_default"
                 android:textColor="@color/vk_black" />
         </LinearLayout>
 
@@ -87,7 +87,7 @@
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USER_NAME"
+                android:text="@string/tv_user_name_default"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/vk_black" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="USER_ONLINE"
+                android:text="@string/tv_user_online_default"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/vk_share_link_color"
                 android:textSize="10sp" />
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="USER_CITY"
+                android:text="@string/tv_user_city_default"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/vk_share_link_color" />
         </LinearLayout>

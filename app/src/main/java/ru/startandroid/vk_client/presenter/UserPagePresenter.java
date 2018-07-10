@@ -3,7 +3,6 @@ package ru.startandroid.vk_client.presenter;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -14,10 +13,10 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
-import ru.startandroid.vk_client.DownloadClass.DownloadImageTask;
 import ru.startandroid.vk_client.VK_app;
 import ru.startandroid.vk_client.model.UserGetRequestResult;
 import ru.startandroid.vk_client.model.UserPageModel;
+import ru.startandroid.vk_client.view.FollowerListView;
 import ru.startandroid.vk_client.view.FriendListView;
 import ru.startandroid.vk_client.view.UserPageView;
 
@@ -25,22 +24,22 @@ import ru.startandroid.vk_client.view.UserPageView;
 public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel> {
     String TAG;
     VK_app app;
-    private Object layout;
 
     public UserPagePresenter(UserPageView view)
     {
         setView(view);
         app = (VK_app) getView().getApplicationContext();
         this.TAG = app.TAG;
-        doRequest();
-
+        String userID = getView().getIntent().getStringExtra("id");
+        doRequest(userID);
     }
 
-    private void doRequest() {
+    private void doRequest(String id) {
         final VKRequest req = new VKRequest(
                 "users.get",
                 VKParameters.from
-                        (VKApiConst.FIELDS, app.getUserRequsetParams())
+                        (VKApiConst.USER_ID , id,
+                                VKApiConst.FIELDS, app.getUserRequsetParams())
         );
 
         req.executeSyncWithListener(new VKRequest.VKRequestListener() {
@@ -86,15 +85,16 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     }
     @Override
     public void friendsListener() {
-        Toast.makeText(v.getApplicationContext(), "Friends", Toast.LENGTH_SHORT).show();
-        getView().startActivity(new Intent(v.getApplicationContext(), FriendListView.class));
+        Intent i = new Intent(v.getApplicationContext(), FriendListView.class);
+        i.putExtra("id", m.getId());
+        getView().startActivity(i);
     }
     @Override
     public void followersListener() {
-        Toast.makeText(v.getApplicationContext(), "Followers", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(v.getApplicationContext(), FollowerListView.class);
+        i.putExtra("id", m.getId());
+        getView().startActivity(i);
     }
-
-
     public int getLayout() {
         Integer res = 0;
         switch (m.getFriendStatus())

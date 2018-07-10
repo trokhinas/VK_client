@@ -5,24 +5,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import ru.startandroid.vk_client.Adapters.UserAdapter;
-import ru.startandroid.vk_client.presenter.FriendListPresenter;
 import ru.startandroid.vk_client.R;
+import ru.startandroid.vk_client.presenter.FollowerListPresenter;
+import ru.startandroid.vk_client.presenter.FriendListPresenter;
 
-public class FriendListView extends listView {
-    FriendListPresenter presenter;
-    RecyclerView FriendList;
+public class FollowerListView extends listView{
+    FollowerListPresenter presenter;
+    RecyclerView FollowerList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.friend_list_view);
-        FriendList = (RecyclerView) findViewById(R.id.FriendList);
-        FriendList.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new FriendListPresenter(this);
+        setContentView(R.layout.follower_list_view);
+        FollowerList = (RecyclerView) findViewById(R.id.FriendList);
+        FollowerList.setLayoutManager(new LinearLayoutManager(this));
+        presenter = new FollowerListPresenter(this);
         UserAdapter ua = presenter.getAdapter();
-        FriendList.setAdapter(ua);
+        FollowerList.setAdapter(ua);
+
     }
+
 
 
     @Override
