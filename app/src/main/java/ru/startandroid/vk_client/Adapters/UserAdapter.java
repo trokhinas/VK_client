@@ -21,11 +21,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private List<UserModel> items = new ArrayList<>();
     private Integer count;
+    //это слушатель кликов, его адаптер получает из активити
+    private OnUserClickListener clickListener;
+    //с помощью этого метода адаптер получает слушатель
+    public void setOnUserClickListener(OnUserClickListener listener)
+    {
+       clickListener = listener;
+    }
 
     public void setCount(Integer count) {
         this.count = count;
     }
-
     public void setItems(List<UserModel> items) {
         this.items.addAll(items);
         notifyDataSetChanged();
@@ -44,22 +50,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 .inflate(R.layout.friend_list_item, parent, false);
         return new UserViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.bind(items.get(position));
     }
-
     @Override
     public int getItemCount() {
         return count;
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder{
         TextView tvUserName;
         ImageView ivPhoto;
         public UserViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //здесь view решает что ей делать при клике на нее
+                    UserModel user = items.get(getLayoutPosition());//взять данные
+                    clickListener.onUserClick(user.getId().toString());//и передать данные слушателю в активити
+                }
+            });
             tvUserName = (TextView) itemView.findViewById(R.id.tvUserName_listItem);
             ivPhoto = (ImageView) itemView.findViewById(R.id.ivUserPhoto_listItem);
         }
@@ -70,5 +82,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     .load(userModel.getPhoto100())
                     .into(((ImageView) (ivPhoto)));
         }
+
+    }
+
+    public interface OnUserClickListener {
+        void onUserClick(String id);
     }
 }

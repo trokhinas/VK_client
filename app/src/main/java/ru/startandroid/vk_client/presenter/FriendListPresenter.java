@@ -1,5 +1,6 @@
 package ru.startandroid.vk_client.presenter;
 
+import android.content.Intent;
 import android.util.Log;
 
 
@@ -14,6 +15,7 @@ import ru.startandroid.vk_client.VK_app;
 import ru.startandroid.vk_client.model.FriendListModel;
 import ru.startandroid.vk_client.model.FriendsGetRequestResult;
 import ru.startandroid.vk_client.view.FriendListView;
+import ru.startandroid.vk_client.view.UserPageView;
 
 
 public class FriendListPresenter extends ListPresenter<FriendListView, FriendListModel>{
@@ -25,15 +27,18 @@ public class FriendListPresenter extends ListPresenter<FriendListView, FriendLis
         setView(view);
         app = (VK_app) getView().getApplicationContext();
         this.TAG = app.TAG;
-        doRequest();
+        String userID = getView().getIntent().getStringExtra("id");
+        Log.d(TAG, "id from extra " + userID);
+        doRequest(userID);
 
     }
 
-    private void doRequest() {
+    private void doRequest(String id) {
         final VKRequest req = new VKRequest(
                 "friends.get",
                 VKParameters.from
-                        (VKApiConst.FIELDS, app.getFriendListRequestParams())
+                        (VKApiConst.USER_ID, id,
+                                VKApiConst.FIELDS, app.getFriendListRequestParams())
         );
         req.executeSyncWithListener(new VKRequest.VKRequestListener() {
             @Override
@@ -59,5 +64,12 @@ public class FriendListPresenter extends ListPresenter<FriendListView, FriendLis
         res.setItems(m.getItems());
         res.setCount(m.getCount());
         return res;
+    }
+
+    public void onItemClick(String id)
+    {
+        Intent i = new Intent(getView().getApplicationContext(), UserPageView.class);
+        i.putExtra("id", id);
+        getView().startActivity(i);
     }
 }

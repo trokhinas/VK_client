@@ -86,13 +86,13 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     @Override
     public void friendsListener() {
         Intent i = new Intent(v.getApplicationContext(), FriendListView.class);
-        i.putExtra("id", m.getId());
+        i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
     @Override
     public void followersListener() {
         Intent i = new Intent(v.getApplicationContext(), FollowerListView.class);
-        i.putExtra("id", m.getId());
+        i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
     public int getLayout() {
