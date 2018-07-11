@@ -2,6 +2,7 @@ package ru.startandroid.vk_client.presenter;
 
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.vk.sdk.api.VKResponse;
 
 import ru.startandroid.vk_client.R;
 import ru.startandroid.vk_client.VK_app;
+import ru.startandroid.vk_client.model.City;
 import ru.startandroid.vk_client.model.UserGetRequestResult;
 import ru.startandroid.vk_client.model.UserPageModel;
 import ru.startandroid.vk_client.view.FollowerListView;
@@ -60,21 +62,33 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
 
     @Override
     public String getUserName() {
-        return m.getFirstName() + m.getLastName();
+        return m.getFirstName() + " " + m.getLastName();
     }
     @Override
     public String getOnline() {
-        return m.getOnline() == 1 ? "online" : "offline";
+        Integer online = m.getOnline();
+        if(online != null)
+            return m.getOnline() == 1 ? "online" : "offline";
+        else
+            return null;
     }
     @Override
     public String getCityTitle() {
-        return m.getCity().getTitle();
+        if(m.getCity() == null)
+            return null;
+        String city = m.getCity().getTitle();
+        if(!TextUtils.isEmpty(city))
+            return city;
+        else
+            return null;
     }
     @Override
     public void getPhoto(ImageView iv) {
-        Picasso.with(iv.getContext())
-                .load(getModel().getPhoto100())
-                .into(iv);
+        String photoUrl = m.getPhoto100();
+        if(!TextUtils.isEmpty(photoUrl))
+            Picasso.with(iv.getContext())
+                    .load(getModel().getPhoto100())
+                    .into(iv);
     }
     @Override
     public String getFriendsCounter() {
@@ -90,52 +104,91 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
         switch (v.getId())
         {
             case R.id.btnFollowers: {
-                onFriendClick();
+                onFollowerClick();
                 break;
             }
             case R.id.btnFriends: {
-                onFolloweClick();
+                onFriendClick();
+                break;
             }
         }
 
     }
 
-    public void onFriendClick() {
+    private void onFriendClick() {
         Intent i = new Intent(v.getApplicationContext(), FriendListView.class);
         i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
-    public void onFolloweClick() {
+    private void onFollowerClick() {
         Intent i = new Intent(v.getApplicationContext(), FollowerListView.class);
         i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
     public int getLayout() {
         Integer res = 0;
+        if(m.getDeactivated() != null)//banned
+            return -1;
         switch (m.getFriendStatus())
         {
-            case 0:
+            case 0://user or not friend or banned user
             {
-                if(!app.getUserID().equals(m.getId().toString()))
+
+                if(!app.getUserID().equals(m.getId().toString()))//not friend
                     res = 4;
                 break;
             }
-            case 1:
+            case 1://person which you follow
             {
                 res = 1;
                 break;
             }
-            case 2:
+            case 2://your follower
             {
                 res = 2;
                 break;
             }
-            case 3:
+            case 3://your friend
             {
                 res = 3;
                 break;
             }
         }
         return res;
+    }
+
+    public String getBannedstatus() {
+        String bs = m.getDeactivated();
+        if(bs.equals("banned"))
+            return "User was banned";
+        else
+            return "User deleted this page";
+    }
+    public String getFriendStatus() {
+        int fs = m.getFriendStatus();
+        String returnState = "";
+        switch (fs)
+        {
+            case 1:
+            {
+                returnState =  "You follow on this user";
+                break;
+            }
+            case 2:
+            {
+                returnState =  "This user follows on you";
+                break;
+            }
+            case 3:
+            {
+                returnState =  m.getFirstName() + " " + m.getLastName() + " is your friend";
+                break;
+            }
+            default:
+            {
+                returnState = null;
+            }
+        }
+        return returnState;
     }
 }

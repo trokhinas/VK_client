@@ -12,6 +12,7 @@
     <string name="tv_friend_list_name_default">USER\'S_FRIENDS</string>
     <string name="tv_follower_list_name_default">USER\'S_FOLLOWERS</string>
     <string name="tv_user_friend_status_default">FRIEND_STATUS</string>
+    <string name="tv_user_banned_status_default">USER_WAS_BANNED_OR_DELETED</string>
 
     <string name="btn_follower_num_default">FOLLOWERS:NUM</string>
     <string name="btn_friend_num_default">FRIENDS:NUM</string>

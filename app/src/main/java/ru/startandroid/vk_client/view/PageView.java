@@ -23,7 +23,7 @@ public abstract class PageView extends AppCompatActivity{
     public abstract void setFriends();
     public abstract void setFollowers();
 
-    abstract void initPage();
+    abstract void initMainPageInfo();
 
 
 }

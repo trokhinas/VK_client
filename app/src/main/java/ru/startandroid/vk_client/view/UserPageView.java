@@ -1,12 +1,10 @@
 package ru.startandroid.vk_client.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,65 +17,77 @@ public class UserPageView extends PageView {
     UserPagePresenter presenter;
     VK_app app;
     String TAG;
+    int layoutState = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = (VK_app) getApplicationContext();
         TAG = app.TAG;
-        setContentView(R.layout.user_page);
         Log.d(TAG, "presenter initialising");
         presenter = new UserPagePresenter(this);
         setLayout();
-        initUserPage();
+        initSpecific();
     }
 
     private void setLayout() {
         switch (presenter.getLayout())
         {
-            case 0:
+            case -1://banned user
+            {
+                Toast.makeText(this, "It's banned user layout", Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.user_banned_page);
+                initMainPageInfo();
+                layoutState = -1;
+                break;
+            }
+            case 0://me
             {
                 Toast.makeText(this, "It's my layout", Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.user_page);
+                initUserPage();
                 break;
             }
-            case 1:
+            default://friend or not, follower, and person which you follow
             {
-                Toast.makeText(this, "It's i follower layout", Toast.LENGTH_SHORT).show();
-                break;
+                setContentView(R.layout.user_friend_page);
+                layoutState = 1;
+                initUserPage();
             }
-            case 2:
-            {
-                Toast.makeText(this, "It's my follower layout", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case 3:
-            {
-                Toast.makeText(this, "It's i my friend layout", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case 4:
-            {
-                Toast.makeText(this, "It's i not my friend layout", Toast.LENGTH_SHORT).show();
-                break;
-            }
-
         }
     }
 
-    private void initUserPage() {
-        initPage();
-
-        setUserName();setOnline();setCity();
-        setPhoto();setFollowers();setFriends();
+    private void initSpecific()
+    {
+        switch (layoutState)
+        {
+            case -1:{
+                TextView tvBannedStatus = findViewById(R.id.tvBannedStatus);
+                tvBannedStatus.setText(presenter.getBannedstatus());
+                break;
+            }
+            case 0:{
+                Button btnChange = findViewById(R.id.btnChange);
+                btnChange.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), "btn change was clocked", Toast.LENGTH_LONG).show();
+                    }
+                });
+                break;
+            }
+            case 1:{
+                TextView tvFriendStatus = findViewById(R.id.tvFriendStatus);
+                tvFriendStatus.setText(presenter.getFriendStatus());
+                break;
+            }
+        }
     }
-    @Override
-    void initPage() {
-        tvUsername =  findViewById(R.id.tvUsername);
-        tvOnline = findViewById(R.id.tvOnline);
-        tvCity =  findViewById(R.id.tvCity);
-        ivPhoto =  findViewById(R.id.ivPhoto);
+    private void initUserPage() {
+        initMainPageInfo();
+
         btnFriend =  findViewById(R.id.btnFriends);
         btnFollowers =  findViewById(R.id.btnFollowers);
-
         btnFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,19 +100,40 @@ public class UserPageView extends PageView {
                 presenter.userListener(v);
             }
         });
+
+        setFollowers();setFriends();
+    }
+    @Override
+    void initMainPageInfo() {
+        tvUsername =  findViewById(R.id.tvUsername);
+        tvOnline = findViewById(R.id.tvOnline);
+        tvCity =  findViewById(R.id.tvCity);
+        ivPhoto =  findViewById(R.id.ivPhoto);
+        setUserName();setOnline();
+        setCity();setPhoto();
     }
 
     @Override
     public void setUserName() {
-        tvUsername.setText(presenter.getUserName());
+        String userName = presenter.getUserName();
+        if(!TextUtils.isEmpty(userName))
+            tvUsername.setText(presenter.getUserName());
     }
     @Override
     public void setOnline() {
-        tvOnline.setText(presenter.getOnline());
+        String online = presenter.getOnline();
+        if(!TextUtils.isEmpty(online))
+            tvOnline.setText(online);
+        else
+            tvOnline.setText("");
     }
     @Override
     public void setCity() {
-        tvCity.setText(presenter.getCityTitle() == null ? "" : presenter.getCityTitle());
+        String city = presenter.getCityTitle();
+        if(!TextUtils.isEmpty(city))
+            tvCity.setText(city);
+        else
+            tvCity.setText("");
     }
     @Override
     public void setPhoto() {
@@ -110,11 +141,15 @@ public class UserPageView extends PageView {
     }
     @Override
     public void setFriends() {
-        btnFriend.setText("Friends:" + presenter.getFriendsCounter());
+        String friendsNum = presenter.getFriendsCounter();
+        if(!TextUtils.isEmpty(friendsNum))
+            btnFriend.setText("Friends:" + friendsNum);
     }
     @Override
     public void setFollowers() {
-        btnFollowers.setText("Followers:" + presenter.getFollowersCounter());
+        String followersNum = presenter.getFollowersCounter();
+        if(!TextUtils.isEmpty(followersNum))
+            btnFollowers.setText("Followers:" + followersNum);
     }
 
 }

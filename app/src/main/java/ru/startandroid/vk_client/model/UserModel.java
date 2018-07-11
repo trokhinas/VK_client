@@ -30,6 +30,10 @@ public class UserModel {
     @Expose
     private Integer friendStatus;
 
+    @SerializedName("deactivated")
+    @Expose
+    private String deactivated;
+
 
 
     public Integer getId() {
@@ -79,5 +83,14 @@ public class UserModel {
     public void setFriendStatus(Integer friendStatus) {
         this.friendStatus = friendStatus;
     }
+
+    public String getDeactivated() {
+        return deactivated;
+    }
+
+    public void setDeactivated(String deactivated) {
+        this.deactivated = deactivated;
+    }
+
 
 }
