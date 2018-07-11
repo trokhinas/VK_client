@@ -13,10 +13,10 @@ import ru.startandroid.vk_client.view.UserPageView;
 public class VK_app extends Application {
     boolean is_logged = false;
 
-    private String UserRequsetParams = "first_name, last_name, online, city, photo_100, counters, friend_status";
-    private String FriendListRequestParams = "first_name, last_name, photo_100,";
-    private String []appScope = {VKScope.FRIENDS};
-    private String UserID = "0";
+    String UserRequsetParams = "first_name, last_name, online, city, photo_100, counters, friend_status";
+    String FriendListRequestParams = "first_name, last_name, photo_100,";
+    String []appScope = {VKScope.FRIENDS};
+    String UserID = "0";
     public String TAG = "myTagLog";
 
     @Override

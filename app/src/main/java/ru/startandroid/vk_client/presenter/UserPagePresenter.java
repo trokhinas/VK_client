@@ -25,8 +25,8 @@ import ru.startandroid.vk_client.view.UserPageView;
 
 
 public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel> {
-    String TAG;
-    VK_app app;
+    private String TAG;
+    private VK_app app;
 
     public UserPagePresenter(UserPageView view)
     {
@@ -51,10 +51,7 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
                 super.onComplete(response);
                 Gson gson = new Gson();
                 UserGetRequestResult res = gson.fromJson(response.json.toString(), UserGetRequestResult.class);
-                Log.d(TAG, "here request " + response.json.toString());
-                Log.d(TAG, "here request " + res.getResponse().get(0).getFirstName());
                 setModel(res.getResponse().get(0));
-                Log.d(TAG, "here request " + m.getFirstName());
             }
         });
     }
