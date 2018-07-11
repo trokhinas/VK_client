@@ -3,8 +3,8 @@ package ru.startandroid.vk_client.presenter;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -13,6 +13,7 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
+import ru.startandroid.vk_client.R;
 import ru.startandroid.vk_client.VK_app;
 import ru.startandroid.vk_client.model.UserGetRequestResult;
 import ru.startandroid.vk_client.model.UserPageModel;
@@ -83,14 +84,28 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     public String getFollowersCounter() {
         return m.getCounters().getFollowers().toString();
     }
+
     @Override
-    public void friendsListener() {
+    public void userListener(View v) {
+        switch (v.getId())
+        {
+            case R.id.btnFollowers: {
+                onFriendClick();
+                break;
+            }
+            case R.id.btnFriends: {
+                onFolloweClick();
+            }
+        }
+
+    }
+
+    public void onFriendClick() {
         Intent i = new Intent(v.getApplicationContext(), FriendListView.class);
         i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
-    @Override
-    public void followersListener() {
+    public void onFolloweClick() {
         Intent i = new Intent(v.getApplicationContext(), FollowerListView.class);
         i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
@@ -101,8 +116,6 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
         {
             case 0:
             {
-                Log.d(TAG, "userId" + app.getUserID());
-                Log.d(TAG,"getID" + m.getId().toString());
                 if(!app.getUserID().equals(m.getId().toString()))
                     res = 4;
                 break;

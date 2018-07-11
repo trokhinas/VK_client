@@ -1,6 +1,7 @@
 package ru.startandroid.vk_client.presenter;
 
 
+import android.view.View;
 import android.widget.ImageView;
 
 public abstract class PagePresenter<View, Model> {
@@ -27,6 +28,6 @@ public abstract class PagePresenter<View, Model> {
     public abstract String getFriendsCounter();
     public abstract String getFollowersCounter();
 
-    public abstract void friendsListener();
-    public abstract void followersListener();
+
+    public abstract void userListener(android.view.View v);
 }

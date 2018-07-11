@@ -19,13 +19,6 @@ public class UserPageView extends PageView {
     UserPagePresenter presenter;
     VK_app app;
     String TAG;
-    public enum layoutState {
-        me,
-        i_follower,
-        my_follower,
-        friend,
-        not_friend;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,23 +71,23 @@ public class UserPageView extends PageView {
     }
     @Override
     void initPage() {
-        tvUsername = (TextView) findViewById(R.id.tvUsername);
-        tvOnline = (TextView) findViewById(R.id.tvOnline);
-        tvCity = (TextView) findViewById(R.id.tvCity);
-        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
-        btnFriend = (Button) findViewById(R.id.btnFriends);
-        btnFollowers = (Button) findViewById(R.id.btnFollowers);
+        tvUsername =  findViewById(R.id.tvUsername);
+        tvOnline = findViewById(R.id.tvOnline);
+        tvCity =  findViewById(R.id.tvCity);
+        ivPhoto =  findViewById(R.id.ivPhoto);
+        btnFriend =  findViewById(R.id.btnFriends);
+        btnFollowers =  findViewById(R.id.btnFollowers);
 
         btnFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.friendsListener();
+                presenter.userListener(v);
             }
         });
         btnFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.followersListener();
+                presenter.userListener(v);
             }
         });
     }
