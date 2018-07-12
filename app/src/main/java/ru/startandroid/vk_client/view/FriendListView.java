@@ -72,9 +72,11 @@ public class FriendListView extends listView {
             tab.setTabListener(new ActionBar.TabListener() {
                 @Override
                 public void onTabSelected(Tab tab, FragmentTransaction ft) {
+                    ua.clearItems();
                     ua.setItems(presenter.getFriendList());
                     ua.setCount();
                     ua.notifyDataSetChanged();
+                    Log.d(TAG, String.valueOf(ua.getItemCount()));
                 }
 
                 @Override

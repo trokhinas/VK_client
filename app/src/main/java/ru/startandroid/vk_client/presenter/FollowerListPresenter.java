@@ -81,8 +81,6 @@ public class FollowerListPresenter extends ListPresenter<FollowerListView, Frien
 
     public UserAdapter getAdapter() {
         UserAdapter res = new UserAdapter();
-        res.setItems(m.getItems());
-        res.setCount(m.getCount());
         return res;
     }
 

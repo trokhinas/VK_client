@@ -30,7 +30,7 @@ public class UserPageView extends PageView {
         initSpecific();
     }
 
-    private void setLayout() {
+    public void setLayout() {
         switch (presenter.getLayout())
         {
             case -1://banned user
@@ -57,7 +57,7 @@ public class UserPageView extends PageView {
         }
     }
 
-    private void initSpecific()
+    public void initSpecific()
     {
         switch (layoutState)
         {

@@ -44,7 +44,6 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
                         (VKApiConst.USER_ID , id,
                                 VKApiConst.FIELDS, app.getUserRequsetParams())
         );
-
         req.executeSyncWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -59,7 +58,10 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
 
     @Override
     public String getUserName() {
-        return m.getFirstName() + " " + m.getLastName();
+        if(m.getFirstName() != null && m.getLastName() != null && m!= null)
+            return m.getFirstName() + " " + m.getLastName();
+        else
+            return "";
     }
     @Override
     public String getOnline() {
