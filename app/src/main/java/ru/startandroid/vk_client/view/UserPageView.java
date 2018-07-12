@@ -35,7 +35,7 @@ public class UserPageView extends PageView {
         {
             case -1://banned user
             {
-                Toast.makeText(this, "It's banned user layout", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"It's banned user layout");
                 setContentView(R.layout.user_banned_page);
                 initMainPageInfo();
                 layoutState = -1;
@@ -43,7 +43,7 @@ public class UserPageView extends PageView {
             }
             case 0://me
             {
-                Toast.makeText(this, "It's my layout", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"It's my layout");
                 setContentView(R.layout.user_page);
                 initUserPage();
                 break;

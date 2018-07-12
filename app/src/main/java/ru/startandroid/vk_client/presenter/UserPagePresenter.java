@@ -67,17 +67,13 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
         if(online != null)
             return m.getOnline() == 1 ? "online" : "offline";
         else
-            return null;
+            return "offline";
     }
     @Override
     public String getCityTitle() {
         if(m.getCity() == null)
-            return null;
-        String city = m.getCity().getTitle();
-        if(!TextUtils.isEmpty(city))
-            return city;
-        else
-            return null;
+            return "";
+        return m.getCity().getTitle();
     }
     @Override
     public void getPhoto(ImageView iv) {
@@ -89,11 +85,17 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     }
     @Override
     public String getFriendsCounter() {
-        return m.getCounters().getFriends().toString();
+        if(m.getCounters() != null)
+            return m.getCounters().getFriends().toString();
+        else
+            return "";
     }
     @Override
     public String getFollowersCounter() {
-        return m.getCounters().getFollowers().toString();
+        if(m.getCounters() != null)
+            return m.getCounters().getFollowers().toString();
+        else
+            return "";
     }
 
     @Override
@@ -122,33 +124,29 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
         i.putExtra("id", m.getId().toString());
         getView().startActivity(i);
     }
+    /*
+    Метод возвращает:
+        -1, если пользователь заблокирован или удален
+        0, если пользователь это вы
+        1, в любом другом случае
+     */
     public int getLayout() {
         Integer res = 0;
         if(m.getDeactivated() != null)//banned
             return -1;
         switch (m.getFriendStatus())
         {
-            case 0://user or not friend or banned user
+            case 0://user or not friend
             {
 
                 if(!app.getUserID().equals(m.getId().toString()))//not friend
-                    res = 4;
+                    res = 1;
                 break;
             }
-            case 1://person which you follow
+            default:
             {
                 res = 1;
-                break;
-            }
-            case 2://your follower
-            {
-                res = 2;
-                break;
-            }
-            case 3://your friend
-            {
-                res = 3;
-                break;
+
             }
         }
         return res;
@@ -163,7 +161,7 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     }
     public String getFriendStatus() {
         int fs = m.getFriendStatus();
-        String returnState = "";
+        String returnState;
         switch (fs)
         {
             case 1:
@@ -181,7 +179,7 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
                 returnState =  m.getFirstName() + " " + m.getLastName() + " is your friend";
                 break;
             }
-            default:
+            default://этот кейс срабатывает если пользователь не является вашим другом
             {
                 returnState = null;
             }

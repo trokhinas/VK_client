@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044">
+        app:layout_constraintVertical_bias="0.0">
 
 
         <LinearLayout
@@ -119,7 +119,7 @@
                 android:textColor="@color/vk_share_link_color" />
         </LinearLayout>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ivPhoto"
             android:layout_width="100dp"
             android:layout_height="100dp"
