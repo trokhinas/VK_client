@@ -45,7 +45,6 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     }
     private void findElements() {
         btnEnter = (Button) findViewById(R.id.btnEnter);
-        tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvWarning = (TextView) findViewById(R.id.tvWarning);
     }
 

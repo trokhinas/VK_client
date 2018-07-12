@@ -32,6 +32,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void setCount(Integer count) {
         this.count = count;
     }
+    public void setCount()
+    {
+        if(items != null)
+            count = items.size();
+        else
+            count = 0;
+    }
     public void setItems(List<UserModel> items) {
         this.items.addAll(items);
         notifyDataSetChanged();

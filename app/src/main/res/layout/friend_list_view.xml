@@ -8,59 +8,6 @@
     tools:context="ru.startandroid.vk_client.view.FriendListView"
     >
 
-    <LinearLayout
-        android:id="@+id/llTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/friendTool"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:gravity="center_horizontal"
-            android:text="@string/tv_follower_list_name_default"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/friendTool"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/FriendList"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llTitle">
-
-        <Switch
-            android:id="@+id/btnSwitchOnline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_switch_online_default" />
-
-        <SearchView
-            android:id="@+id/svUserSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4" />
-
-    </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/FriendList"
         android:layout_width="0dp"
@@ -70,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendTool"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/friend_list_item" />
 
 
