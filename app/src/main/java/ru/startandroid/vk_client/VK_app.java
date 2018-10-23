@@ -37,6 +37,7 @@ public class VK_app extends Application {
         }
         else
             nextView = authorization();
+        nextView.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(nextView);
     }
     private Intent enter()
