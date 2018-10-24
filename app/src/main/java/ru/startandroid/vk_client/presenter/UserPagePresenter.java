@@ -95,7 +95,7 @@ public class UserPagePresenter extends PagePresenter<UserPageView, UserPageModel
     @Override
     public String getFollowersCounter() {
         if(m.getCounters() != null)
-            return m.getCounters().getFollowers().toString();
+            return String.valueOf(m.getCounters().getFollowers());
         else
             return "";
     }
